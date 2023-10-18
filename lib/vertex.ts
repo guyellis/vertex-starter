@@ -1,12 +1,11 @@
-import { join } from 'path';
-import { readFile } from 'fs/promises';
+import { getAccessToken, isVertexError, loadPrompt, writeResult } from './helpers';
 import { VertexTextBisonRequestBody, VertexFoundationModel, VertexTextBisonResponse, VertexResponseError } from './vertex-types';
 
 /**
  * This can be a value in the range 1 to 1024
  */
 const MAX_OUTPUT_TOKENS=1024;
-const MODEL_ID: VertexFoundationModel = 'code-bison';
+const MODEL_ID: VertexFoundationModel = 'text-bison';
 
 /**
  * This needs to be a project in your GCP Console that has the Vertex AI API enabled.
@@ -30,18 +29,6 @@ const getBody = (prompt: string): VertexTextBisonRequestBody => {
   return body;
 };
 
-const getAccessToken = (): string => {
-  const { GCLOUD_ACCESS_TOKEN } = process.env;
-  if (!GCLOUD_ACCESS_TOKEN) {
-    throw new Error('GCLOUD_ACCESS_TOKEN is not defined. Try and run "export GCLOUD_ACCESS_TOKEN=$(gcloud auth print-access-token)"');
-  }
-  return GCLOUD_ACCESS_TOKEN;
-};
-
-const isVertexError = (vertexResponse: VertexTextBisonResponse | VertexResponseError): vertexResponse is VertexResponseError => {
-  return 'error' in vertexResponse;
-};
-
 export const callVertex = async (body: VertexTextBisonRequestBody): Promise<VertexTextBisonResponse> => {
   const accessToken = getAccessToken();
   const response = await fetch(url, {
@@ -63,16 +50,11 @@ export const callVertex = async (body: VertexTextBisonRequestBody): Promise<Vert
   return vertexResponse;
 };
 
-const loadPrompt = async (): Promise<string> => {
-  const promptBuffer = await readFile(join(__dirname, 'prompt.txt'));
-  return promptBuffer.toString();
-};
-
 const main = async (): Promise<void> => {
   const prompt = await loadPrompt();
   const input = getBody(prompt);
   const output = await callVertex(input);
-  console.log(JSON.stringify(output, null, 2));
+  await writeResult(input, output)
 };
 
 main();
