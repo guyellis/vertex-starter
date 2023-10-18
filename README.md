@@ -14,6 +14,7 @@ npm ci
 
 - Go to the [GCP Console](https://console.cloud.google.com/) and login.
 - Create a new Project.
+  - In `lib/vertex.ts` set `PROJECT_ID` to the name of this project.
 - Enable the `Vertex AI API` for that Project.
 - [Install the gcloud CLI](https://cloud.google.com/sdk/docs/install)
 
