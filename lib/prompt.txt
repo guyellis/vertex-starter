@@ -1,0 +1,2 @@
+Role: You are an expert at creating TypeScript tsconfig.json files.
+Task: Create a typical tsconfig.json file for a NodeJS project.

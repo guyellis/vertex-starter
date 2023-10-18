@@ -12,11 +12,20 @@ npm ci
 
 ## Setup GCP
 
-TODO
+- Go to the [GCP Console](https://console.cloud.google.com/) and login.
+- Create a new Project.
+- Enable the `Vertex AI API` for that Project.
+- [Install the gcloud CLI](https://cloud.google.com/sdk/docs/install)
 
 ## Using this repo
 
-TODO
+Edit the `lib/prompt.txt` file and provide the prompt you want to send to Vertex.
+
+From the root of the project run:
+
+```
+ts-node lib/vertex.ts
+```
 
 ## References
 
