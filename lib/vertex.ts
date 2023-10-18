@@ -12,6 +12,11 @@ const MODEL_ID: VertexFoundationModel = 'text-bison';
  */
 const PROJECT_ID='<replace-with-the-name-of-your-project>';
 
+if (PROJECT_ID === '<replace-with-the-name-of-your-project>') {
+  console.error('You need to set the PROJECT_ID in lib/vertex.ts');
+  process.exit(1);
+}
+
 const url = `https://us-central1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/us-central1/publishers/google/models/${MODEL_ID}:predict`;
 
 const getBody = (prompt: string): VertexTextBisonRequestBody => {
