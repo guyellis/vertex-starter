@@ -4,13 +4,13 @@ import { VertexTextBisonRequestBody, VertexFoundationModel, VertexTextBisonRespo
 /**
  * This can be a value in the range 1 to 1024
  */
-const MAX_OUTPUT_TOKENS=1024;
+const MAX_OUTPUT_TOKENS = 1024;
 const MODEL_ID: VertexFoundationModel = 'text-bison';
 
 /**
  * This needs to be a project in your GCP Console that has the Vertex AI API enabled.
  */
-const PROJECT_ID='<replace-with-the-name-of-your-project>';
+const PROJECT_ID = '<replace-with-the-name-of-your-project>';
 
 if (PROJECT_ID === '<replace-with-the-name-of-your-project>') {
   console.error('You need to set the PROJECT_ID in lib/vertex.ts');
@@ -59,7 +59,8 @@ const main = async (): Promise<void> => {
   const prompt = await loadPrompt();
   const input = getBody(prompt);
   const output = await callVertex(input);
-  await writeResult(input, output)
+  await writeResult(input, output);
+  console.log('Completed without error');
 };
 
 main();
